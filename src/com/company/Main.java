@@ -6,6 +6,6 @@ public class Main {
 
         Reader reader = new Reader("formule-2-sat.txt");
         ImplicationGraph implicationGraph = new ImplicationGraph(reader);
-       System.out.println( implicationGraph.getGraph().toString());
+        System.out.println(implicationGraph.getGraph().toString());
     }
 }
