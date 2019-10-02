@@ -49,6 +49,15 @@ public class Graph<Label> {
         return result;
 
     }
-    
 
+    public LinkedList getDestination(int source) {
+        if(!(incidency.get(source).peek() == null)){
+            LinkedList<Integer> destinations = new LinkedList<>();
+            for(Edge edge : incidency.get(source)){
+                destinations.add(edge.destination);
+            }
+            return destinations;
+        }
+        return null;
+    }
 }
