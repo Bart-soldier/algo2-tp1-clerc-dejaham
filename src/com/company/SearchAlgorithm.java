@@ -10,7 +10,7 @@ public class SearchAlgorithm {
     private ArrayList<SearchData> completedNodes;
     private Stack<SearchData> unfinishedNodes;
     private ArrayList<Boolean> discoveredNodes;
-    LinkedList<Integer> neighborsOfNode;
+    private LinkedList<Integer> neighborsOfNode;
     int time;
 
 
@@ -19,7 +19,7 @@ public class SearchAlgorithm {
         completedNodes = new ArrayList<>();
         unfinishedNodes = new Stack<>();
         discoveredNodes = new ArrayList<>(graph.order());
-        initializeDiscoveredNodes(discoveredNodes);
+        initializeDiscoveredNodes();
         time = 1;
     }
 
@@ -37,11 +37,10 @@ public class SearchAlgorithm {
         return completedNodes;
     }
 
-    private ArrayList initializeDiscoveredNodes(ArrayList<Boolean> discoveredNodes) {
+    private void initializeDiscoveredNodes() {
         for(int i = 0; i < graph.order(); i++){
             discoveredNodes.add(false);
         }
-        return discoveredNodes;
     }
 
     private void checkUnfinishedNodes() {
