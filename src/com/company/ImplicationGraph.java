@@ -5,8 +5,10 @@ import java.awt.*;
 public class ImplicationGraph {
 
     private Graph graph;
+    private Reader fileDataReader;
 
     public ImplicationGraph(Reader fileDataReader){
+        this.fileDataReader = fileDataReader;
         graph = new Graph((Integer) fileDataReader.getFileData().get(0) * 2);
 
         for(int i = 1; i < graph.order() - 2; i = i+2){
@@ -23,7 +25,7 @@ public class ImplicationGraph {
         }
     }
 
-    public void transposeGraph(Reader fileDataReader) {
+    public void transposeGraph() {
         graph = new Graph((Integer) fileDataReader.getFileData().get(0) * 2);
 
         for (int i = 1; i < graph.order() - 2; i = i + 2) {

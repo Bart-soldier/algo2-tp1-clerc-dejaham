@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Stack;
 
-public class SearchAlgorithm {
+abstract class SearchAlgorithm {
 
-    private Graph graph;
-    private ArrayList<SearchData> completedNodes;
-    private Stack<SearchData> unfinishedNodes;
-    private ArrayList<Boolean> discoveredNodes;
-    private LinkedList<Integer> neighborsOfNode;
-    int time;
+    protected Graph graph;
+    protected ArrayList<Integer> result;
+    protected ArrayList<SearchData> completedNodes;
+    protected Stack<SearchData> unfinishedNodes;
+    protected ArrayList<Boolean> discoveredNodes;
+    protected LinkedList<Integer> neighborsOfNode;
+    protected int time;
 
     /**
      * La classe SearchData est utilisée en tant qu'objet ayant trois attribus qui seront utiles à DPS.
      */
-    private class SearchData {
+    protected static class SearchData {
 
         int nodeNumber;
         int arrivalTime;
         int finishTime;
-        
 
         public SearchData(int nodeNumber, int arrivalTime, int finishTime) {
             this.nodeNumber = nodeNumber;
@@ -37,44 +37,28 @@ public class SearchAlgorithm {
         unfinishedNodes = new Stack<>(); // Les sommets du graph qui ont seulement étés découverts ou sont les prochains à être découverts.
         discoveredNodes = new ArrayList<>(graph.order()); // Une liste de boolean contenant les sommets du graphs.
                                                           // La valeur est true si le sommet est découvert, false sinon.
+        result = new ArrayList<>(); // Le résultat de la recherche.
         initializeDiscoveredNodes();
         time = 1;
     }
 
     /**
-     * Cette méthode représente l'implémentation de l'algorithme de recherche depth-first search (DPS).
-     *
-     * @return Un ArrayList contenant tous les sommets du graph (avec leurs attribus SearchData) dans l'ordre croissant de finishTime.
+     * Cette méthode représente l'implémentation de l'algorithme de recherche.
      */
-    public void depthFirstSearch(){
-
-        while (discoveredNodes.contains(false) || !(unfinishedNodes.empty())){ // Nous restons dans cette boucle tant que tous les sommets ne sont pas marqués comme terminés.
-            checkUnfinishedNodes();
-
-            neighborsOfNode = graph.getDestination(unfinishedNodes.peek().nodeNumber);
-
-            checkNeighborsOfNode();
-        }
-    }
-
-    /**
-     * Cette méthode initialize toutes les valeurs de discoveredNodes à false.
-     */
-    private void initializeDiscoveredNodes() {
-        for(int i = 0; i < graph.order(); i++){
-            discoveredNodes.add(false);
-        }
-    }
+    abstract void search();
 
     /**
      * Cette méthode vérifie si la pile unfinishedNodes est vide. Si elle l'est, elle rajoute un sommet qui n'est pas encore
      * marqué comme découvert et le marque comme tel.
      */
-    private void checkUnfinishedNodes() {
-        if(unfinishedNodes.empty()){
-            unfinishedNodes.push(new SearchData(discoveredNodes.indexOf(false), time, -1));
-            discoveredNodes.set(discoveredNodes.indexOf(false),true);
-            time++;
+    abstract void checkUnfinishedNodes();
+
+    /**
+     * Cette méthode initialize toutes les valeurs de discoveredNodes à false.
+     */
+    protected void initializeDiscoveredNodes() {
+        for(int i = 0; i < graph.order(); i++){
+            discoveredNodes.add(false);
         }
     }
 
@@ -84,7 +68,7 @@ public class SearchAlgorithm {
      *  Si le sommet actuel n'a aucun arc sortant ou que ceux-ci amène vers des sommets déjà visités, alors ce sommet est
      * marqué comme terminé et est ajouté à la liste 'completedNodes'.
      */
-    private void checkNeighborsOfNode() {
+    protected void checkNeighborsOfNode(ArrayList<SearchData> completedNodes) {
         boolean indicator = true;
 
         if (!(neighborsOfNode == null)) {
@@ -108,17 +92,11 @@ public class SearchAlgorithm {
     }
 
     public String toString() {
-        String string = new String("Node number - Arrival time - Finish Time\n");
+        String string = ("Node number - Arrival time - Finish Time\n");
         for(int i = 0; i < completedNodes.size(); i++) {
             string = string.concat(completedNodes.get(i).nodeNumber + " - " + completedNodes.get(i).arrivalTime + " - "
                     + completedNodes.get(i).finishTime + "\n");
         }
-        return string;
+        return string + "\n";
     }
-
-    /*
-    public void depthFirstSearchTransposeGraph() {
-
-    }
-     */
 }

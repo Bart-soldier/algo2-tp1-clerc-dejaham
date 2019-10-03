@@ -38,7 +38,7 @@ public class Graph<Label> {
     }
 
     public String toString() {
-        String result = new String("");
+        String result = ("");
         result = result.concat(cardinal + "\n");
         for (int i = 0; i<cardinal;i++) {
             for (Edge e : incidency.get(i)) {
