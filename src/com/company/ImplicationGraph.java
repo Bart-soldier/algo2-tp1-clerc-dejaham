@@ -11,7 +11,7 @@ public class ImplicationGraph {
         this.fileDataReader = fileDataReader;
         graph = new Graph((Integer) fileDataReader.getFileData().get(0) * 2);
 
-        for(int i = 1; i < graph.order() - 2; i = i+2){
+        for(int i = 1; i < fileDataReader.getFileData().size(); i = i+2){
             int litteral1 = (Integer) fileDataReader.getFileData().get(i);
             litteral1 = conversion(litteral1, graph.order());
             int litteral2 = (Integer) fileDataReader.getFileData().get(i+1);
@@ -28,7 +28,7 @@ public class ImplicationGraph {
     public void transposeGraph() {
         graph = new Graph((Integer) fileDataReader.getFileData().get(0) * 2);
 
-        for (int i = 1; i < graph.order() - 2; i = i + 2) {
+        for (int i = 1; i < fileDataReader.getFileData().size(); i = i + 2) {
             int litteral1 = (Integer) fileDataReader.getFileData().get(i);
             litteral1 = conversion(litteral1, graph.order());
             int litteral2 = (Integer) fileDataReader.getFileData().get(i + 1);
@@ -69,4 +69,36 @@ public class ImplicationGraph {
         }
         return litteral - size/2;
     }
+
+    /*
+    public ImplicationGraph(Reader fileDataReader) {
+        this.fileDataReader = fileDataReader;
+        graph = new Graph((Integer) fileDataReader.getFileData().get(0) * 2);
+        int i; // for-loop index
+        int j; // while-loop index
+        int litteral1, litteral2, negationLitteral1, negationLitteral2;
+
+        for (i = 1; i < fileDataReader.getFileData().size(); i++) { // Parcours les entiers lus dans le ficher .txt
+            if ((Integer) fileDataReader.getFileData().get(i) != 0) { // Si nous ne sommes pas à la fin d'une clause
+                j = i + 1;
+                if (j < fileDataReader.getFileData().size()) { // Nous vérifions qu'il n'est pas le dernière élément de la liste
+                    while ((Integer) fileDataReader.getFileData().get(j) != 0) { // Nous regardons tous les éléments de la clause
+                        litteral1 = (Integer) fileDataReader.getFileData().get(i);
+                        litteral1 = conversion(litteral1, graph.order());
+                        litteral2 = (Integer) fileDataReader.getFileData().get(j);
+                        litteral2 = conversion(litteral2, graph.order());
+
+                        negationLitteral1 = negation(litteral1, graph.order());
+                        negationLitteral2 = negation(litteral2, graph.order());
+
+                        graph.addArc(negationLitteral1, litteral2, new Label(""));
+                        graph.addArc(negationLitteral2, litteral1, new Label(""));
+                        // On crée des arcs entre tous les éléments qui font partis de la même clause
+                        j++;
+                    }
+                }
+            }
+        }
+    }
+   */
 }

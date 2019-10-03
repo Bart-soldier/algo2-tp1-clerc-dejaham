@@ -6,11 +6,12 @@ import java.util.Stack;
 
 abstract class SearchAlgorithm {
 
-    protected Graph graph;
-    protected ArrayList<Integer> result;
-    protected ArrayList<SearchData> completedNodes;
-    protected Stack<SearchData> unfinishedNodes;
-    protected ArrayList<Boolean> discoveredNodes;
+    protected Graph graph; // Le graph a parcourir.
+    protected ArrayList<Integer> result; // Le résultat de la recherche.
+    protected ArrayList<SearchData> completedNodes; // Les sommets du graph qui ont étés découverts et sont terminés.
+    protected Stack<SearchData> unfinishedNodes; // Les sommets du graph qui ont seulement étés découverts ou sont les prochains à être découverts.
+    protected ArrayList<Boolean> discoveredNodes; // Une liste de boolean contenant les sommets du graphs.
+                                                  // La valeur est true si le sommet est découvert, false sinon.
     protected LinkedList<Integer> neighborsOfNode;
     protected int time;
 
@@ -32,12 +33,11 @@ abstract class SearchAlgorithm {
 
 
     public SearchAlgorithm(Graph graph) {
-        this.graph = graph; // Le graph a parcourir.
-        completedNodes = new ArrayList<>(); // Les sommets du graph qui ont étés découverts et sont terminés.
-        unfinishedNodes = new Stack<>(); // Les sommets du graph qui ont seulement étés découverts ou sont les prochains à être découverts.
-        discoveredNodes = new ArrayList<>(graph.order()); // Une liste de boolean contenant les sommets du graphs.
-                                                          // La valeur est true si le sommet est découvert, false sinon.
-        result = new ArrayList<>(); // Le résultat de la recherche.
+        this.graph = graph;
+        result = new ArrayList<>();
+        completedNodes = new ArrayList<>();
+        unfinishedNodes = new Stack<>();
+        discoveredNodes = new ArrayList<>(graph.order());
         initializeDiscoveredNodes();
         time = 1;
     }
@@ -92,9 +92,9 @@ abstract class SearchAlgorithm {
     }
 
     public String toString() {
-        String string = ("Node number - Arrival time - Finish Time\n");
+        String string = ("Node number / Arrival time / Finish Time\n");
         for(int i = 0; i < completedNodes.size(); i++) {
-            string = string.concat(completedNodes.get(i).nodeNumber + " - " + completedNodes.get(i).arrivalTime + " - "
+            string = string.concat(completedNodes.get(i).nodeNumber + " / " + completedNodes.get(i).arrivalTime + " / "
                     + completedNodes.get(i).finishTime + "\n");
         }
         return string + "\n";
