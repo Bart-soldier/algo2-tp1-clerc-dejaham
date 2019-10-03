@@ -23,6 +23,23 @@ public class ImplicationGraph {
         }
     }
 
+    public void transposeGraph(Reader fileDataReader) {
+        graph = new Graph((Integer) fileDataReader.getFileData().get(0) * 2);
+
+        for (int i = 1; i < graph.order() - 2; i = i + 2) {
+            int litteral1 = (Integer) fileDataReader.getFileData().get(i);
+            litteral1 = conversion(litteral1, graph.order());
+            int litteral2 = (Integer) fileDataReader.getFileData().get(i + 1);
+            litteral2 = conversion(litteral2, graph.order());
+
+            int negationLitteral1 = negation(litteral1, graph.order());
+            int negationLitteral2 = negation(litteral2, graph.order());
+
+            graph.addArc(litteral2, negationLitteral1, new Label(""));
+            graph.addArc(litteral1, negationLitteral2, new Label(""));
+        }
+    }
+
     public Graph getGraph() {
         return graph;
     }
@@ -37,14 +54,14 @@ public class ImplicationGraph {
      * @param size Nombre de sommets dans le graph.
      * @return Le littéral transformer.
      */
-    public int conversion (int litteral, int size) {
+    private int conversion (int litteral, int size) {
         if (litteral < 0) {
             litteral = Math.abs(litteral) + size/2;
         }
         return litteral - 1;
     }
 
-    public int negation (int litteral, int size) {
+    private int negation (int litteral, int size) {
         if (litteral < size/2) {
             return litteral + size/2;
         }

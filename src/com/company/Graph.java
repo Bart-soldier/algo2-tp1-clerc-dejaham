@@ -47,9 +47,15 @@ public class Graph<Label> {
             }
         }
         return result;
-
     }
 
+    /**
+     * Cette méthode vérifie que 'source' possède des arcs sortants dans le graph. Si c'est le cas, nous mettons toutes
+     * les destinations possibles dans une LinkedList.
+     *
+     * @param source Sommet dont on veut connaître les voisins vers lequels nous pouvons nous déplacer.
+     * @return La liste des voisins vers lequels nous pouvons nous déplacer.
+     */
     public LinkedList getDestination(int source) {
         if(!(incidency.get(source).peek() == null)){
             LinkedList<Integer> destinations = new LinkedList<>();

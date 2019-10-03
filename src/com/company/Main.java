@@ -9,8 +9,12 @@ public class Main {
         ImplicationGraph implicationGraph = new ImplicationGraph(reader);
         System.out.println(implicationGraph.getGraph().toString());
 
-        ArrayList<SearchData> list = new ArrayList<>();
         SearchAlgorithm dps = new SearchAlgorithm(implicationGraph.getGraph());
-        list = dps.depthFirstSearch();
+        dps.depthFirstSearch();
+        System.out.print(dps.toString());
+
+        implicationGraph.transposeGraph(reader);
+        System.out.println(implicationGraph.getGraph().toString());
+        dps = new SearchAlgorithm(implicationGraph.getGraph());
     }
 }
